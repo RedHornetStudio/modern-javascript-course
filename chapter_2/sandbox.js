@@ -1,1 +1,5 @@
-alert('hello, world');
+let title = 'aaaaaa';
+
+let result = `my ${title}`;
+
+console.log(result);
