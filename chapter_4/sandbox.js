@@ -48,3 +48,35 @@ let people = ['mario', 'luigi', 'ryu', 'shaun', 'chun-li'];
 people.forEach((value, index) => {
     console.log(value, index);
 });
+
+let myArrayObject = {
+    0: 'John',
+    1: 'Mike',
+    2: 'Luigi',
+    3: 'li',
+    length: 4,
+    insideObject: {
+        name: 'Hei',
+        surname: 'Way',
+
+        arrowFunc() {
+            console.log(this);
+        }
+    },
+
+    myForEach(callBackFunction) {
+        for(let i = 0; i < this.length; i++) {
+            callBackFunction(this[i]);
+        }
+    },
+
+    callArrowFunc() {
+        this.insideObject.arrowFunc();
+    }
+};
+
+myArrayObject.myForEach((value) => {
+    console.log(value);
+});
+
+myArrayObject.callArrowFunc();
