@@ -59,7 +59,11 @@ let myArrayObject = {
         name: 'Hei',
         surname: 'Way',
 
-        arrowFunc() {
+        arrowFunc: () => {
+            console.log(this);
+        },
+
+        simpleFunc() {
             console.log(this);
         }
     },
@@ -72,6 +76,10 @@ let myArrayObject = {
 
     callArrowFunc() {
         this.insideObject.arrowFunc();
+    },
+
+    callSimpleFunc() {
+        this.insideObject.simpleFunc();
     }
 };
 
@@ -80,3 +88,4 @@ myArrayObject.myForEach((value) => {
 });
 
 myArrayObject.callArrowFunc();
+myArrayObject.callSimpleFunc();
