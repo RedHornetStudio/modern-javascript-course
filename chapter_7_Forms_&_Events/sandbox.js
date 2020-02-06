@@ -25,7 +25,7 @@ form.addEventListener('submit', e => {
 // };
 // console.dir(form.username);
 
-form.username.addEventListener('input', e => {
+form.username.addEventListener('keypress', e => {
     let username = e.target.value;
     if(pattern.test(username) && username.length > 5) {
         //e.target.className = 'error';
