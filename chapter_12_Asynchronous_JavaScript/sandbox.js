@@ -145,7 +145,7 @@ console.log(2);
 
 const getTodos = async () => {
 
-    const response = await fetch('todos/luigis.json');
+    const response = await fetch('todos/luigi.json');
 
     if(response.status !== 200) {
         throw new Error('cannot fetch the data');
