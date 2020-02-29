@@ -67,6 +67,9 @@ changeLocation.addEventListener('submit', e => {
 
     getDetails(city).then(details => {
         updateUI(details);
+
+        // store location in local storage
+        localStorage.setItem('city', city);
     }).catch(err => {
         if(!card.classList.contains('d-none')) {
             card.classList.add('d-none');
@@ -86,3 +89,27 @@ changeLocation.addEventListener('submit', e => {
     });
 
 });
+
+// get data from local storage
+const savedCity = localStorage.getItem('city');
+if(savedCity) {
+    getDetails(savedCity).then(details => {
+        updateUI(details);
+    }).catch(err => {
+        if(!card.classList.contains('d-none')) {
+            card.classList.add('d-none');
+        }
+
+        if(err.message === "No such city" && city !== '') {
+            if(noSuchCity.classList.contains('d-none')) {
+                noSuchCity.classList.remove('d-none');
+            }
+        } else if (city === '') {
+            if(!noSuchCity.classList.contains('d-none')) {
+                noSuchCity.classList.add('d-none');
+            }
+        } else {
+            console.log(err);
+        }
+    });
+}
