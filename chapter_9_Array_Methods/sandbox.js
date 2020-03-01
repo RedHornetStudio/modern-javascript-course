@@ -177,16 +177,44 @@ const scores = [10, 30, 15, 25, 50, 40, 5];
 
 // //////////////////////////////////// chaining array methods
 
-const products = [
-    {name: 'gold star', price: 30},
-    {name: 'green shell', price: 10},
-    {name: 'red shell', price: 40},
-    {name: 'banana skin', price: 5},
-    {name: 'mushroom', price: 50},
-];
+// const products = [
+//     {name: 'gold star', price: 30},
+//     {name: 'green shell', price: 10},
+//     {name: 'red shell', price: 40},
+//     {name: 'banana skin', price: 5},
+//     {name: 'mushroom', price: 50},
+// ];
 
-const promos = products
-    .filter(product => product.price > 20)
-    .map(product => `the ${product.name} is ${product.price / 2} pounds`);
+// const promos = products
+//     .filter(product => product.price > 20)
+//     .map(product => `the ${product.name} is ${product.price / 2} pounds`);
 
-console.log(promos);
+// console.log(promos);
+
+// /////////////////////////////////////////// myArray class
+
+class MyArray {
+    constructor(...args) {
+        for(let i = 0; i < args.length; i++) {
+            this[i] = args[i];
+        }
+        this.length = args.length;
+    }
+    myFilter(callback) {
+        let length = 0;
+        const newMyArray = new MyArray();
+        for(let i = 0; i < this.length; i++) {
+            if(callback(this[i], i)) {
+                newMyArray[length] = this[i];
+                newMyArray.length = ++length;
+            }
+        }
+        return newMyArray;
+    }
+}
+
+const myArray = new MyArray(1, 2, 3, 4, 5, 6, 7, 8, 9);
+const myArray2 = myArray.myFilter(elem => {
+    return elem > 7;
+});
+console.log(myArray2);
