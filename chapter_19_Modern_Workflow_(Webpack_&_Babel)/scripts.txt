@@ -1,0 +1,3 @@
+node_modules/.bin/babel src/index.js -o distribution/assets/js/bundle.js
+node_modules/.bin/babel src/index.js -w -o distribution/assets/js/bundle.js
+node_modules/.bin/webpack
