@@ -1,0 +1,126 @@
+scripts:
+node_modules/.bin/webpack --mode production
+node_modules/.bin/webpack-dev-server --mode development
+
+//1.//Create package.json file using command "npm init". At its simplest, a package.json file can be described as a manifest of your
+project that includes the packages and applications it depends on, information about its unique source control,
+and specific metadata like the project's name, description, and author.
+
+//2.//Run command "npm install --save-dev @babel/core @babel/cli @babel/preset-env".
+Before using this packages you need to create babel.config.json or .babelrc file to describe what presets babel to use.
+If using with webpack this files are not needed.
+.babelrc example:
+{
+    "presets": ["@babel/preset-env"]
+}
+With this packages you can convert ECMAScript 2015+ code into a backwards compatible version of JavaScript in current
+and older browsers or environments using command "node_modules/.bin/babel src/index.js -o distribution/assets/bundle.js",
+or use this command to watch file for changes "node_modules/.bin/babel src/index.js -w -o distribution/assets/bundle.js".
+
+//3.//Create webpack.config.js file:
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'distribution/assets'),
+  },
+};
+Run command "npm install webpack webpack-cli --save-dev" to install webpack packages. Now you can use webpack command
+"node_modules/.bin/webpack --mode production"
+to bundle your files from entry to output (indicated in webpack.config.js file).
+
+//4.//To start webpack development server install webpack-dev-server using command "npm install --save-dev webpack-dev-server".
+The webpack-dev-server provides you with a simple web server and the ability to use live reloading.
+Change your configuration file (webpack.config.js) to tell the dev server where to look for files:
+const path = require('path');
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'distribution/assets'),
+    },
+
+    devServer: {
+        contentBase: path.resolve(__dirname, 'distribution'),
+        publicPath: '/assets/'
+    }
+};
+To start webpack dev server in development mode run command "node_modules/.bin/webpack-dev-server --mode development".
+Webpack-dev-server does not bundle files from entry to output (indicated in webpack.config.js file), it saves bundled file in memory
+to speedup development.
+To bundle files you need to use command "node_modules/.bin/webpack --mode production".
+
+//5.// To combine webpack with bable install babel-loader using command "npm install babel-loader --save-dev". This package
+allows transpiling JavaScript files using Babel and webpack.
+Within your webpack configuration object (webpack.config.js), you'll need to add the babel-loader to the list of modules, like so:
+const path = require('path');
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'distribution/assets'),
+    },
+
+    devServer: {
+        contentBase: path.resolve(__dirname, 'distribution'),
+        publicPath: '/assets/'
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            }
+        ]
+    }
+};
+Now webpack will convert your JavaScript to older version using preset @babel/preset-env.
+
+//6.//To bundle imported css files you need to install css-loader and style-loader using command
+"npm install --save-dev css-loader style-loader".
+To use this loaders you need to add the new rule to configuration file (webpack.config.js):
+const path = require('path');
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'distribution/assets'),
+    },
+
+    devServer: {
+        contentBase: path.resolve(__dirname, 'distribution'),
+        publicPath: '/assets/'
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            }
+        ]
+    }
+};
+Now all imported css file will be bundled into bundle.js
