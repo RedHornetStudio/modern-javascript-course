@@ -211,10 +211,17 @@ class MyArray {
         }
         return newMyArray;
     }
+    pop() {
+        this.length--;
+        delete this[this.length];
+    }
 }
 
 const myArray = new MyArray(1, 2, 3, 4, 5, 6, 7, 8, 9);
 const myArray2 = myArray.myFilter(elem => {
     return elem > 7;
 });
+
+myArray.pop();
+console.log(myArray);
 console.log(myArray2);
